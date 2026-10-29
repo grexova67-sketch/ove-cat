@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff4f6">
+  <title>Для любимого 💌</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      background: #fff4f6;
+      color: #68364c;
+      font-synthesis: none;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 15% 15%, #ffe1ea 0, transparent 38%),
+        radial-gradient(ellipse at 85% 85%, #ffe7d9 0, transparent 36%),
+        #fff8f8;
+    }
+
+    .card {
+      position: relative;
+      width: min(90vw, 680px);
+      min-height: 480px;
+      padding: 48px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 1px solid #ffffffc9;
+      border-radius: 32px;
+      background: #ffffffa6;
+      box-shadow: 0 24px 80px #b75a761a, inset 0 1px #fff;
+      backdrop-filter: blur(12px);
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: #bb7189;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      color: #8d4965;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.4rem, 8vw, 4rem);
+      font-weight: 500;
+    }
+
+    .hint {
+      margin: 12px 0 28px;
+      color: #a77a89;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 15px 29px;
+      border: 0;
+      border-radius: 999px;
+      color: white;
+      background: linear-gradient(135deg, #ed86a3, #d76789);
+      box-shadow: 0 10px 24px #d7678938;
+      font: inherit;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 28px #d767894d;
+    }
+
+    button:active { transform: translateY(0) scale(.97); }
+    button:focus-visible { outline: 3px solid #a34a6c; outline-offset: 4px; }
+
+    .love-scene {
+      position: relative;
+      width: min(100%, 520px);
+      min-height: 190px;
+      margin-top: 20px;
+      display: grid;
+      place-items: center;
+    }
+
+    .cat-track {
+      position: absolute;
+      z-index: 2;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .message {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      color: #d65f82;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 7vw, 3.65rem);
+      font-weight: 700;
+      line-height: 1.15;
+      text-shadow: 0 3px 0 #fff, 0 8px 24px #d65f8229;
+      animation: message-in .75s cubic-bezier(.2, 1.6, .4, 1) both;
+    }
+
+    .message::after {
+      content: "";
+      position: absolute;
+      right: -14px;
+      bottom: -7px;
+      left: -14px;
+      height: 12px;
+      border-bottom: 3px solid #f3a5b8;
+      border-radius: 50%;
+      transform: rotate(-2deg);
+    }
+
+    .cat {
+      position: absolute;
+      z-index: 2;
+      width: 68px;
+      height: 68px;
+      top: 8%;
+      left: 50%;
+      margin: -34px 0 0 -34px;
+      opacity: 0;
+      pointer-events: none;
+      filter: drop-shadow(0 8px 7px #944b6020);
+    }
+
+    .cat.is-visible {
+      opacity: 1;
+      animation:
+        cat-run-around 5s linear infinite,
+        cat-bob .24s ease-in-out infinite alternate;
+    }
+
+    .heart {
+      position: absolute;
+      z-index: 3;
+      left: 50%;
+      top: 50%;
+      display: block;
+      color: #ed7596;
+      pointer-events: none;
+      animation: heart-pop 1.8s ease-out forwards;
+    }
+
+    .heart:nth-child(3n) { color: #f5a46f; }
+    .heart:nth-child(3n + 1) { color: #d85c83; }
+
+    .sparkle {
+      position: absolute;
+      color: #e9b55e;
+      animation: twinkle 1.8s ease-in-out infinite alternate;
+    }
+
+    .sparkle-one { top: 16%; left: 15%; font-size: 1.5rem; }
+    .sparkle-two { right: 14%; bottom: 17%; font-size: 1.2rem; animation-delay: .6s; }
+
+    .love-scene[hidden] { display: none; }
+    .love-scene.show { animation: scene-in .5s ease both; }
+
+    @keyframes message-in {
+      from { opacity: 0; transform: scale(.55) rotate(-5deg); }
+      to { opacity: 1; transform: scale(1) rotate(0); }
+    }
+
+    @keyframes scene-in {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes cat-run-around {
+      0%, 100% { left: 50%; top: 8%; }
+      12.5% { left: 79%; top: 19%; }
+      25% { left: 94%; top: 50%; }
+      37.5% { left: 79%; top: 81%; }
+      50% { left: 50%; top: 92%; }
+      62.5% { left: 21%; top: 81%; }
+      75% { left: 6%; top: 50%; }
+      87.5% { left: 21%; top: 19%; }
+    }
+
+    @keyframes cat-bob {
+      from { transform: translateY(0) rotate(-3deg); }
+      to { transform: translateY(-4px) rotate(3deg); }
+    }
+
+    @keyframes heart-pop {
+      0% { opacity: 0; transform: translate(-50%, -40%) scale(.3) rotate(0); }
+      15% { opacity: 1; }
+      100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.2) rotate(var(--r));
+      }
+    }
+
+    @keyframes twinkle {
+      from { opacity: .35; transform: scale(.75) rotate(0); }
+      to { opacity: 1; transform: scale(1.15) rotate(20deg); }
+    }
+
+    @media (max-width: 480px) {
+      .card { min-height: 440px; padding: 40px 18px; }
+      .love-scene { min-height: 165px; }
+      .cat { width: 58px; height: 58px; margin: -29px 0 0 -29px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <span class="sparkle sparkle-one" aria-hidden="true">✦</span>
+    <span class="sparkle sparkle-two" aria-hidden="true">✧</span>
+    <p class="eyebrow">маленькое послание для тебя</p>
+    <h1>Моему любимому</h1>
+    <p class="hint">Нажми на кнопку — там кое-что особенное 💌</p>
+    <button id="love-button" type="button" aria-controls="love-scene">Любимому 💗</button>
+
+    <section class="love-scene" id="love-scene" aria-live="polite" hidden>
+      <p class="message">I love you<br>very much</p>
+      <div class="cat-track">
+        <svg class="cat" id="cat" viewBox="0 0 100 100" role="img" aria-label="Маленький котик бежит вокруг надписи">
+          <path d="M22 39 17 13l25 15m16 0 25-15-5 28" fill="#f3b982" stroke="#9d6652" stroke-width="4" stroke-linejoin="round"/>
+          <path d="M19 54c0-20 14-34 32-34s32 14 32 34-14 34-32 34S19 74 19 54Z" fill="#ffd7a8" stroke="#9d6652" stroke-width="4"/>
+          <path d="M27 29 21 20l15 7m37 2 6-9-15 7" fill="#ef9aa8"/>
+          <ellipse cx="38" cy="53" rx="3.5" ry="5" fill="#624b46"/>
+          <ellipse cx="64" cy="53" rx="3.5" ry="5" fill="#624b46"/>
+          <path d="m47 61 4 3 4-3c-1-4-7-4-8 0Z" fill="#e88a97"/>
+          <path d="M51 64c-1 6-9 7-11 2m11-2c1 6 9 7 11 2" fill="none" stroke="#9d6652" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="m35 63-17-3m17 9-17 3m47-9 17-3m-17 9 17 3" fill="none" stroke="#9d6652" stroke-width="2" stroke-linecap="round"/>
+          <path d="M44 38c2 2 4 2 6 0m4 0c2 2 4 2 6 0" fill="none" stroke="#dc9d70" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </section>
+  </main>
+  <script>
+    const button = document.querySelector("#love-button");
+    const scene = document.querySelector("#love-scene");
+    const cat = document.querySelector("#cat");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let heartTimer;
+
+    function createHeart(index) {
+      const heart = document.createElement("span");
+      const angle = (Math.PI * 2 * index) / 16 + Math.random() * 0.35;
+      const distance = 55 + Math.random() * 70;
+      heart.className = "heart";
+      heart.textContent = index % 4 === 0 ? "💖" : "♥";
+      heart.setAttribute("aria-hidden", "true");
+      heart.style.setProperty("--x", `${Math.cos(angle) * distance}px`);
+      heart.style.setProperty("--y", `${Math.sin(angle) * distance}px`);
+      heart.style.setProperty("--r", `${Math.random() * 50 - 25}deg`);
+      heart.style.fontSize = `${16 + Math.random() * 13}px`;
+      scene.append(heart);
+      heart.addEventListener("animationend", () => heart.remove(), { once: true });
+    }
+
+    button.addEventListener("click", () => {
+      scene.hidden = false;
+      scene.classList.remove("show");
+      void scene.offsetWidth;
+      scene.classList.add("show");
+      cat.classList.add("is-visible");
+      button.setAttribute("aria-expanded", "true");
+
+      if (!reducedMotion.matches && !heartTimer) {
+        for (let i = 0; i < 16; i += 1) createHeart(i);
+        heartTimer = window.setInterval(() => {
+          createHeart(Math.floor(Math.random() * 16));
+        }, 130);
+      }
+    });
+  </script>
+</body>
+</html>
